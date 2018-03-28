@@ -5,18 +5,18 @@ services:
         restart: always
         environment:
             POSTGRES_PASSWORD: postgres
-            PGDATA: /var/lib/postgresql/data/pgdata
+            PGDATA: ${PGDATA}
         ports:
             - 5432:5432
         volumes:
-            - ./data:/var/lib/postgresql/data/pgdata
+            - ${postgres_data}:/${PGDATA}
     pgadmin:
         image: dpage/pgadmin4
         restart: always
         environment:
-            PGADMIN_DEFAULT_EMAIL: lex@lex
-            PGADMIN_DEFAULT_PASSWORD: lex
+            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
         volumes:
-            - ./pgadmin-data:/var/lib/pgadmin
+            - ${pgadmin_data}:/var/lib/pgadmin
         ports:
             - 80:80
