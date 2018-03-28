@@ -1,0 +1,14 @@
+version: '3'
+services:
+  mail-server:
+    image: greenmail/standalone:1.5.4
+    ports:
+     - "3025:3025"
+     - "3110:3110"
+     - "3143:3143"
+     - "3465:3465"
+     - "3993:3993"
+     - "3995:3995"
+    environment:
+      "GREENMAIL_OPTS": "-Dgreenmail.setup.test.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.verbose -Dgreenmail.users=test:test@reliabletech.ru,test2:test@reliabletech.ru"
+      "JAVA_OPTS": "-Djava.net.preferIPv4Stack=true -Xmx512m"

@@ -1,0 +1,22 @@
+version: "3"
+services:
+    postgres:
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: postgres
+            PGDATA: /var/lib/postgresql/data/pgdata
+        ports:
+            - 5432:5432
+        volumes:
+            - ./data:/var/lib/postgresql/data/pgdata
+    pgadmin:
+        image: dpage/pgadmin4
+        restart: always
+        environment:
+            PGADMIN_DEFAULT_EMAIL: lex@lex
+            PGADMIN_DEFAULT_PASSWORD: lex
+        volumes:
+            - ./pgadmin-data:/var/lib/pgadmin
+        ports:
+            - 80:80
