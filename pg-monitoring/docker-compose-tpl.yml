@@ -1,0 +1,49 @@
+version: "3"
+services:
+  pg-exporter:
+    image: wrouesnel/postgres_exporter
+    restart: always
+    environment:
+      DATA_SOURCE_NAME: postgresql://postgres:postgres@postgres:5432/postgres?sslmode=disable
+    volumes:
+      - ./postgres_exporter/metrics.yaml:/etc/postgres_exporter/metrics.yml
+    command:
+      - '--extend.query-path=/etc/postgres_exporter/metrics.yml'
+    ports:
+      - 9187:9187
+  node-exporter:
+    image: quay.io/prometheus/node-exporter
+    restart: always
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - 9100:9100
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - ./grafana/datasources:/etc/grafana/datasources
+      - ./grafana/dashboards:/etc/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    ports:
+      - 3000:3000
+
+networks:
+  default:
+#    external:
+#      name: postgres_default
