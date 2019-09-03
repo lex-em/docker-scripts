@@ -469,7 +469,7 @@
     },
     {
       "collapse": false,
-      "height": 250,
+      "height": 750,
       "panels": [
         {
           "columns": [],
@@ -554,7 +554,7 @@
           ],
           "targets": [
             {
-              "expr": "topk(20, increase(pg_stat_statements_calls{datname!~\"template.*\", datname!~\"postgres\", instance=~\"$server\", datname=~\"$database\"}[10m]))",
+              "expr": "topk(50, increase(pg_stat_statements_calls{datname!~\"template.*\", datname!~\"postgres\", instance=~\"$server\", datname=~\"$database\"}[10m]))",
               "format": "table",
               "instant": true,
               "intervalFactor": 2,
@@ -562,7 +562,7 @@
               "refId": "A"
             }
           ],
-          "title": "TOP-20 Most called queries (10m rate)",
+          "title": "TOP-50 Most called queries (10m rate)",
           "transform": "table",
           "type": "table"
         }
@@ -576,7 +576,7 @@
     },
     {
       "collapse": false,
-      "height": 250,
+      "height": 750,
       "panels": [
         {
           "columns": [],
@@ -676,7 +676,7 @@
           ],
           "targets": [
             {
-              "expr": "topk(20, pg_stat_statements_mean_time{datname!~\"template.*\", datname!~\"postgres\", short_query!~\"COPY.*\", instance=~\"$server\", datname=~\"$database\"})",
+              "expr": "topk(50, pg_stat_statements_mean_time{datname!~\"template.*\", datname!~\"postgres\", short_query!~\"COPY.*\", instance=~\"$server\", datname=~\"$database\"})",
               "format": "table",
               "instant": true,
               "intervalFactor": 2,
@@ -684,7 +684,7 @@
               "refId": "A"
             }
           ],
-          "title": "TOP-20 Most long-running queries (by mean_time, except backups)",
+          "title": "TOP-50 Most long-running queries (by mean_time, except backups)",
           "transform": "table",
           "type": "table"
         }
