@@ -14,34 +14,23 @@ networks:
 
 Additional metrics are placed at `postgres_exporter/metrics.yml`
 
+PG_STAT_STATEMENTS extension should be enabled.
+
 ### node-exporter
 
 It just works, no additional settings needed :)
 
 ### prometheus
 
-Prometheus configuration placed at `prometheus/prometheus.yml`. All target hosts are docker service names
+Prometheus configuration placed at `prometheus/prometheus.yml`. All target hosts are docker service names.
+Data folder `prometheus/data` is mounted into container and store prometheus database.
+
+Additional container `volumes-provisioner` is used for modifying data folder rights.
 
 ### grafana
 
-At first need to add prometheus datasource: 
-* Left vertical menu -> Configuration -> Data Sources
-* Add datasource of type prometheus
-  * name (in lower case!): prometheus 
-  * url: http://prometheus:9090)
+Datasource (prometheus) and dashboards are configured statically.
+Dashboards:
 
-### System dashboard
-
-Recommended for use dashboard for node-exporter [#1860](https://grafana.com/grafana/dashboards/1860)
-
-Install:
-
-At first need to add prometheus datasource: 
-* Left vertical menu -> Create -> Import
-* Put number into `Grafana.com Dashboard` input
-
-### Postgres dashboard
-
-Postgres dashboard should be imported from `grafana-pg-dashboard.json` (uses postgres_exporter custom metrics):
-* Left vertical menu -> Create -> Import
-* Put json content into input or choose file via `Uplaod .json file` button.
+- System dashboard for node-exporter [#1860](https://grafana.com/grafana/dashboards/1860)
+- Custom Postgres dashboard

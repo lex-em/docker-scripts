@@ -1,8 +1,7 @@
 version: "3"
 services:
   pg-exporter:
-    image: wrouesnel/postgres_exporter
-    restart: always
+    image: wrouesnel/postgres_exporter:v0.8.0
     environment:
       DATA_SOURCE_NAME: postgresql://postgres:postgres@postgres:5432/postgres?sslmode=disable
     volumes:
@@ -11,9 +10,9 @@ services:
       - '--extend.query-path=/etc/postgres_exporter/metrics.yml'
     ports:
       - 9187:9187
+
   node-exporter:
-    image: quay.io/prometheus/node-exporter
-    restart: always
+    image: prom/node-exporter:v0.18.1
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -25,17 +24,34 @@ services:
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
     ports:
       - 9100:9100
+
+  volumes-provisioner: # for prometheus /data folder rights
+    image: hasnat/volumes-provisioner:latest
+    environment:
+      PROVISION_DIRECTORIES: "65534:65534:0755:/var/data"
+    volumes:
+      - ./prometheus/data:/var/data
+
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v2.17.1
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/data:/prometheus/data
+    depends_on:
+      - volumes-provisioner
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-lifecycle'
+      - '--storage.tsdb.retention.size=1TB' #1 TB хранилище
+      - '--storage.tsdb.retention.time=30d' #храним 30 дней
     ports:
       - 9090:9090
+
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:6.7.2
     volumes:
-      - ./grafana/datasources:/etc/grafana/datasources
-      - ./grafana/dashboards:/etc/grafana/dashboards
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - /etc/hosts:/etc/hosts
     environment:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
