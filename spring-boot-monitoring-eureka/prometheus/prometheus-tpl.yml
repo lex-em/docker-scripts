@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 5s
+  scrape_timeout: 5s
+  evaluation_interval: 5s
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets:
+          - prometheus:9090
+  - job_name: 'eureka'
+    scrape_interval: 20s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+    consul_sd_configs:
+      - server: eureka:8761
+    relabel_configs:
+      - source_labels: ['__meta_consul_tags']
+        action: keep
+      - source_labels: ['__meta_consul_service']
+        target_label: application
+      - source_labels: ['__meta_consul_address', '__meta_consul_service_metadata_management_port']
+        separator: ':'
+        target_label: __address__
