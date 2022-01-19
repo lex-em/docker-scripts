@@ -1,0 +1,61 @@
+process_names:
+  - name: "{{.ExeBase}}"
+    exe:
+      - chromium-freewo
+      - telegram-desktop
+  - name: "smartgit"
+    comm:
+      - java
+    cmdline:
+      - -jar /home/lex/soft/smartgit/lib/bootloader.jar
+  - name: "{{.Matches.jar}}"
+    comm:
+      - java
+    cmdline:
+      - -jar\s(?P<jar>\S+)
+  - name: "maven-server"
+    comm:
+      - java
+    cmdline:
+      - org.jetbrains.idea.maven.server.RemoteMavenServer36$
+  - name: "IDEA"
+    comm:
+      - java
+    cmdline:
+      - com.intellij.idea.Main$
+  - name: "maven"
+    comm:
+      - java
+    cmdline:
+      - -Dmaven.home=\S+
+  - name: "{{.Matches.main}}"
+    comm:
+      - java
+    cmdline:
+      - (?P<main>\S+)$
+  - name: "{{.Comm}}"
+    comm:
+      - bash
+      - chromium-freewo
+      - csgo_linux64
+      - containerd
+      - dockerd
+      - docker-proxy
+      - dolphin
+      - firefox
+      - java
+      - node
+      - plexmediaserver
+      - plexmediaplayer
+      - plasmashell
+      - skypeforlinux
+      - steam
+      - steamwebhelper
+      - zswap-shrink
+      - packagekitd
+      - soffice.bin
+  - exe:
+    - /sbin/upstart
+    cmdline:
+    - --user
+    name: upstart:-user
