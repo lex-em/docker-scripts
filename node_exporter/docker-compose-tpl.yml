@@ -1,0 +1,17 @@
+version: "3"
+services:
+  node-exporter:
+    image: prom/node-exporter:v0.18.1
+    restart: always
+    network_mode: host
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+#    ports:
+#      - 9100:9100

@@ -1,0 +1,22 @@
+version: "3"
+services:
+  nvidia_smi_exporter:
+    image: utkuozdemir/nvidia_gpu_exporter:0.4.0
+    restart: always
+    devices:
+      - /dev/nvidiactl:/dev/nvidiactl
+      - /dev/nvidia0:/dev/nvidia0
+      - /dev/nvidia-modeset:/dev/nvidia-modeset
+      - /dev/nvidia-uvm:/dev/nvidia-uvm
+      - /dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools
+    environment:
+      - LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libnvidia-ml.so
+    volumes:
+      - /usr/lib64/libnvidia-ml.so:/usr/lib64/libnvidia-ml.so:ro
+      - /usr/lib64/libnvidia-ml.so.1:/usr/lib64/libnvidia-ml.so.1:ro
+      - /usr/bin/nvidia-smi:/usr/bin/nvidia-smi:ro
+    ports:
+      - 9835:9835
+#    image: nvidia/dcgm-exporter:1.4.6
+#    environment:
+#      runtime: NVIDIA

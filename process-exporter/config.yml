@@ -36,6 +36,7 @@ process_names:
   - name: "{{.Comm}}"
     comm:
       - bash
+      - chrome
       - chromium-freewo
       - csgo_linux64
       - containerd
@@ -45,6 +46,7 @@ process_names:
       - firefox
       - java
       - node
+      - ng
       - plexmediaserver
       - plexmediaplayer
       - plasmashell
@@ -54,6 +56,7 @@ process_names:
       - zswap-shrink
       - packagekitd
       - soffice.bin
+      - Xorg
   - exe:
     - /sbin/upstart
     cmdline:
