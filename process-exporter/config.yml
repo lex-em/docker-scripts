@@ -49,6 +49,7 @@ process_names:
       - ng
       - plexmediaserver
       - plexmediaplayer
+      - plex-bin
       - plasmashell
       - skypeforlinux
       - steam
@@ -57,6 +58,9 @@ process_names:
       - packagekitd
       - soffice.bin
       - Xorg
+      - teams
+      - wireplumber
+      - mattermost-desk
   - exe:
     - /sbin/upstart
     cmdline:

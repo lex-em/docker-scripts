@@ -1,0 +1,15 @@
+version: "3"
+services:
+  deluge:
+    image: linuxserver/deluge:2.1.1
+    restart: always
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Etc/UTC
+    volumes:
+      - /d:/d
+    ports:
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp

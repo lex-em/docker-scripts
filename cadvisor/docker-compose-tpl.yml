@@ -4,6 +4,7 @@ services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
+    restart: always
     ports:
       - 9099:8080
     volumes:
