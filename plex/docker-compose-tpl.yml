@@ -1,7 +1,7 @@
 version: "3"
 services:
   plex:
-    image: linuxserver/plex:1.32.1
+    image: linuxserver/plex:1.40.3
     restart: always
     ports:
       - 32400:32400
