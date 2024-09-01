@@ -1,0 +1,45 @@
+services:
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    hostname: elastic
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    environment:
+      - node.name=elastic
+      - cluster.name=lex-serv
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ELASTIC_PASSWORD=1qazxsw2
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.15.0
+    volumes:
+      - ./kbndata:/usr/share/kibana/data
+    ports:
+      - 5601:5601
+    depends_on:
+      - elastic
+    environment:
+#      - xpack.security.enabled=false
+      - ELASTICSEARCH_HOSTS=http://elastic:9200
+      - ELASTICSEARCH_USERNAME=user
+      - ELASTICSEARCH_PASSWORD=1qazxsw2
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.15.0
+    user: root
+    depends_on:
+      - elastic
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+  curator:
+    image: anjia0532/docker-curator:8.0.8
+    environment:
+      UNIT_COUNT: 1
+      UNIT: months
+    depends_on:
+      - elastic
+    volumes:
+      - ./curator/:/config

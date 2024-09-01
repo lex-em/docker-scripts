@@ -1,0 +1,30 @@
+filebeat.inputs:
+  - type: container
+    paths:
+      - '/var/lib/docker/containers/*/*.log'
+
+#filebeat.autodiscover:
+#  providers:
+#    - type: docker
+#      hints.enabled: true
+#      hints.default_config.enabled: false
+
+processors:
+  - add_docker_metadata:
+      host: "unix:///var/run/docker.sock"
+
+  - decode_json_fields:
+      fields: [ "message" ]
+      target: "json"
+      overwrite_keys: true
+
+output.elasticsearch:
+  hosts: [ "elastic:9200" ]
+  indices:
+    - index: "lf-downloader-%{+yyyy.MM.dd}"
+#      when.or:
+#        - equals:
+#            container.image.name: docker.elastic.co/beats/filebeat:8.15
+
+logging.json: true
+logging.metrics.enabled: false
