@@ -12,6 +12,7 @@ services:
       - discovery.type=single-node
       - xpack.security.enabled=false
       - ELASTIC_PASSWORD=1qazxsw2
+      - ES_JAVA_OPTS=-Xms1024m -Xmx4096m
   kibana:
     image: docker.elastic.co/kibana/kibana:8.15.0
     volumes:
@@ -31,7 +32,7 @@ services:
     depends_on:
       - elastic
     volumes:
-      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml    :ro
       - /var/lib/docker:/var/lib/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock
   curator:
