@@ -12,7 +12,7 @@ services:
       - discovery.type=single-node
       - xpack.security.enabled=false
       - ELASTIC_PASSWORD=1qazxsw2
-      - ES_JAVA_OPTS=-Xms1024m -Xmx4096m
+      - ES_JAVA_OPTS=Xms2g -Xmx2g
   kibana:
     image: docker.elastic.co/kibana/kibana:8.15.0
     volumes:
