@@ -38,7 +38,7 @@ services:
   curator:
     image: anjia0532/docker-curator:8.0.8
     environment:
-      UNIT_COUNT: 1
+      UNIT_COUNT: 6
       UNIT: months
     depends_on:
       - elastic

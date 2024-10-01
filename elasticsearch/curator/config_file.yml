@@ -1,18 +1,9 @@
 elasticsearch:
   client:
     hosts: http://elastic:9200
-#    cloud_id:
-#    bearer_auth:
-#    opaque_id:
     request_timeout: 60
-#    http_compress:
-#    verify_certs:
-#    ca_certs:
     client_cert:
     client_key:
-#    ssl_assert_hostname:
-#    ssl_assert_fingerprint:
-#    ssl_version:
   other_settings:
     master_only: ${MASTER_ONLY:True}
     skip_version_test:
@@ -25,4 +16,3 @@ logging:
   loglevel: INFO
   logfile:
   logformat: default
-  #blacklist: ['elasticsearch', 'urllib3']

@@ -11,15 +11,9 @@ actions:
       continue_if_exception: True
       disable_action: False
     filters:
-#      - filtertype: pattern
-#        kind: prefix
-#        value: *
-#        exclude:
       - filtertype: age
-#        source: creation_date
         source: name
         timestring: '%Y.%m.%d'
         direction: older
         unit: ${UNIT:months}
         unit_count: ${UNIT_COUNT:1}
-#        exclude:
