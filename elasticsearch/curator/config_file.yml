@@ -1,16 +1,26 @@
-client:
-  hosts:
-    - elastic
-  port: 9200
-  url_prefix:
-  use_ssl: ${USE_SSL:False}
-  certificate:
-  client_cert:
-  client_key:
-  ssl_no_validate: False
-  http_auth: ${HTTP_AUTH:''}
-  timeout: ${TIMEOUT:120}
-  master_only: ${MASTER_ONLY:True}
+elasticsearch:
+  client:
+    hosts: http://elastic:9200
+#    cloud_id:
+#    bearer_auth:
+#    opaque_id:
+    request_timeout: 60
+#    http_compress:
+#    verify_certs:
+#    ca_certs:
+    client_cert:
+    client_key:
+#    ssl_assert_hostname:
+#    ssl_assert_fingerprint:
+#    ssl_version:
+  other_settings:
+    master_only: ${MASTER_ONLY:True}
+    skip_version_test:
+    username: user
+    password: 1qazxsw2
+    api_key:
+      id:
+      api_key:
 logging:
   loglevel: INFO
   logfile:
