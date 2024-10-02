@@ -21,7 +21,7 @@ processors:
 output.elasticsearch:
   hosts: [ "elastic:9200" ]
   indices:
-    - index: "lf-downloader-%{+yyyy.MM.dd}"
+    - index: "%{[docker.container.labels.com_docker_compose_service]}-%{+yyyy.MM.dd}"
 
 logging.json: true
 logging.metrics.enabled: false
