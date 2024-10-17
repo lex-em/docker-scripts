@@ -1,6 +1,7 @@
 services:
   elastic:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    restart: always
     hostname: elastic
     volumes:
       - ./esdata:/usr/share/elasticsearch/data
@@ -15,6 +16,7 @@ services:
       - ES_JAVA_OPTS=Xms2g -Xmx2g
   kibana:
     image: docker.elastic.co/kibana/kibana:8.15.0
+    restart: always
     volumes:
       - ./kbndata:/usr/share/kibana/data
     ports:
@@ -28,6 +30,7 @@ services:
       - ELASTICSEARCH_PASSWORD=1qazxsw2
   filebeat:
     image: docker.elastic.co/beats/filebeat:8.15.0
+    restart: always
     user: root
     depends_on:
       - elastic
@@ -37,6 +40,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
   curator:
     image: anjia0532/docker-curator:8.0.8
+    restart: always
     environment:
       UNIT_COUNT: 6
       UNIT: months
